@@ -1,7 +1,13 @@
 {
   "CUSTOM_TYPES": {
     "Address": "AccountId",
-    "LookupSource": "AccountId"
+    "LookupSource": "AccountId",
+    "Kitty": {
+      "id": "H256",
+      "dna": "H256",
+      "price": "Balance",
+      "gen": "u64"
+    }
   },
   "PROVIDER_SOCKET": "ws://127.0.0.1:9944"
 }

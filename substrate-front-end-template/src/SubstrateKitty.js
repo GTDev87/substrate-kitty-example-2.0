@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Grid, Card, Statistic } from 'semantic-ui-react';
 import { TxButton } from './substrate-lib/components';
+import { KittyCards } from './KittyCards';
 
 import { useSubstrate } from './substrate-lib';
 // import { TxButton } from './substrate-lib/components';
@@ -13,7 +14,7 @@ function Main (props) {
   const [status, setStatus] = useState('');
 
   // The currently stored value
-  const [currentKittyCount, setKittyCount] = useState(0);
+  const [currentAllKittiesCount, setAllKittiesCount] = useState(0);
 
   useEffect(() => {
     let unsubscribe;
@@ -21,7 +22,7 @@ function Main (props) {
       // The storage value is an Option<u32>
       // So we have to check whether it is None first
       // There is also unwrapOr
-      setKittyCount(allKittiesCount);
+      setAllKittiesCount(allKittiesCount);
       window.api = api;
     }).then(unsub => {
       unsubscribe = unsub;
@@ -33,9 +34,11 @@ function Main (props) {
   return (
     <Grid.Column width={8}>
       <h1>Substrate Kitties</h1>
-      <div>{`There are ${currentKittyCount} kitties purring.`}</div>
+      <div>{`There are ${currentAllKittiesCount} kitties purring.`}</div>
+      <KittyCards count={currentAllKittiesCount} />
       <Form>
         <Form.Field style={{ textAlign: 'center' }}>
+          
           <TxButton
             accountPair={accountPair}
             label='Create Kitty'
@@ -55,7 +58,7 @@ function Main (props) {
   );
 }
 
-export default function TemplateModule (props) {
+export default function SubstrateKitty (props) {
   const { api } = useSubstrate();
   return (api.query.substratekitties && api.query.substratekitties.allKittiesCount
     ? <Main {...props} /> : null);
